@@ -1,0 +1,8 @@
+services:
+  WhoAmI:
+    image: jwilder/whoami
+    ports:
+      - 8000:8000
+    environment:
+      - something="123"
+      - anything="nam"

@@ -1,0 +1,24 @@
+# clone source code first: git clone https://github.com/docker-hy/material-applications.git
+version: 'v2.19.1'
+
+services:
+  frontend:
+    build:
+      context: C:/Users/Admin/Desktop/devopswithdocker/material-applications/example-frontend
+      dockerfile: C:/Users/Admin/Desktop/devopswithdocker/exercise 1.14/Dockerfile_frontend
+    ports:
+      - 5000:5000
+    container_name: frontend-image
+
+  backend:
+    build:
+      context: C:/Users/Admin/Desktop/devopswithdocker/material-applications/example-backend
+      dockerfile: C:/Users/Admin/Desktop/devopswithdocker/exercise 1.14/Dockerfile_backend
+    ports:
+      - 8080:8080
+    container_name: backend-image
+
+  database:
+    image: redis:alpine
+    ports:
+      - 6379:6379

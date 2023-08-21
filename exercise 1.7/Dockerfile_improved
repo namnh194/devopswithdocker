@@ -1,0 +1,13 @@
+FROM ubuntu:18.04
+
+WORKDIR /usr/src/app
+
+COPY improved_curler.sh .
+
+# RUN chmod +x hello.sh
+RUN apt-get update
+
+RUN apt-get install curl -y
+
+ENTRYPOINT ["/bin/bash", "-c", "./improved_curler.sh"]
+

@@ -1,0 +1,54 @@
+# clone source code first: git clone https://github.com/docker-hy/material-applications.git
+version: 'v2.19.1'
+
+services:
+
+  frontend:
+    build:
+      context: C:/Users/Admin/Desktop/devopswithdocker/material-applications/example-frontend
+      dockerfile: C:/Users/Admin/Desktop/devopswithdocker/exercise 1.14/Dockerfile_frontend
+    ports:
+      - 5000:5000
+    container_name: frontend-image
+
+  backend:
+    build:
+      context: C:/Users/Admin/Desktop/devopswithdocker/material-applications/example-backend
+      dockerfile: C:/Users/Admin/Desktop/devopswithdocker/exercise 1.14/Dockerfile_backend
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=example
+    ports:
+      - 8080:8080
+    container_name: backend-image
+
+  database:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+
+  db:
+    image: postgres:13.2-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=example
+    container_name: db_redmine
+    volumes:
+      - database:/var/lib/postgresql/data
+
+  redmine:
+    image: redmine:4.1-alpine
+    environment:
+      - REDMINE_DB_POSTGRES=db
+      - REDMINE_DB_PASSWORD=example
+    ports:
+      - 9999:3000
+    volumes:
+      - files:/usr/src/redmine/files
+    depends_on:
+      - db
+
+volumes:
+  database:
+  files:
